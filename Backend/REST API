@@ -1,0 +1,167 @@
+# REST API (Backend)
+
+## 1. Formal Definition
+A **REST API** (Representational State Transfer Application Programming Interface) is an architectural style for designing networked applications.
+It uses standard HTTP methods to operate on resources identified by URLs.
+
+In simple terms:
+> A REST API exposes data and functionality as resources that clients interact with using HTTP.
+
+---
+
+## 2. Why It Matters for Backend Development
+REST is one of the most widely used backend API styles because it:
+- Scales well over HTTP
+- Is stateless and cache-friendly
+- Works across platforms and languages
+- Is easy to understand and debug
+
+REST APIs are commonly used for:
+- Web and mobile backends
+- Microservices communication
+- Public and partner APIs
+
+---
+
+## 3. Core REST Principles
+Key REST constraints include:
+
+- **Client–Server**: separation of concerns
+- **Stateless**: each request contains all necessary context
+- **Uniform Interface**: consistent resource representation
+- **Cacheable**: responses can be cached
+- **Layered System**: intermediaries (proxies, gateways) allowed
+
+Violating these constraints usually leads to brittle APIs.
+
+---
+
+## 4. Resources and Endpoints
+In REST, everything is modeled as a **resource**.
+
+Example resources:
+- `/users`
+- `/users/{id}`
+- `/orders`
+- `/orders/{id}`
+
+Endpoints should represent **nouns**, not actions.
+
+✅ Good:
+```
+GET /users/123
+POST /orders
+```
+
+❌ Bad:
+```
+GET /getUser
+POST /createOrder
+```
+
+---
+
+## 5. HTTP Methods and Semantics
+
+| Method | Meaning | Example |
+|------|--------|--------|
+| GET | Read | Get a user |
+| POST | Create | Create new order |
+| PUT | Replace | Update entire resource |
+| PATCH | Partial update | Update one field |
+| DELETE | Remove | Delete resource |
+
+Using incorrect HTTP methods breaks REST semantics.
+
+---
+
+## 6. Good Example: RESTful Endpoint
+
+```js
+app.get("/users/:id", async (req, res) => {
+  const user = await getUserById(req.params.id);
+  res.status(200).json(user);
+});
+```
+
+Why this is good:
+- Resource-oriented
+- Uses GET correctly
+- Clear URL structure
+- Returns proper status codes
+
+---
+
+## 7. Bad Example: Anti-REST Design
+
+```js
+app.post("/getUserById", async (req, res) => {
+  const user = await getUser(req.body.id);
+  res.send(user);
+});
+```
+
+Problems:
+- Action-based naming
+- Misuses POST
+- Harder to cache
+- Less predictable for clients
+
+---
+
+## 8. Status Codes and Error Handling
+REST APIs rely heavily on HTTP status codes:
+
+- `200 OK`
+- `201 Created`
+- `400 Bad Request`
+- `401 Unauthorized`
+- `403 Forbidden`
+- `404 Not Found`
+- `500 Internal Server Error`
+
+Status codes are part of the API contract and must be used consistently.
+
+---
+
+## 9. Versioning Strategies
+Common REST versioning approaches:
+
+- URL versioning: `/api/v1/users`
+- Header versioning: `Accept: application/vnd.api+json`
+- Query params: `?version=1` (least recommended)
+
+Versioning is important for backward compatibility.
+
+---
+
+## 10. Interview Questions You Should Expect
+
+1. What is REST?
+2. What makes an API RESTful?
+3. Why is statelessness important?
+4. Difference between PUT and PATCH?
+5. How do HTTP status codes fit into REST?
+6. What is a resource?
+7. How do you version REST APIs?
+8. Is REST suitable for real-time systems?
+9. REST vs RPC vs GraphQL?
+10. What are common REST anti-patterns?
+
+---
+
+## 11. Answer Template for Interviews
+
+> “REST is an architectural style that models backend functionality as resources accessed via HTTP.
+> It emphasizes statelessness, uniform interfaces, and standard HTTP semantics.
+> A well-designed REST API is predictable, scalable, and easy to consume across platforms.”
+
+---
+
+## 12. One-Minute Summary
+
+- REST is resource-based API design
+- Uses standard HTTP methods
+- Stateless and scalable
+- Widely adopted in backend systems
+- Easy to debug and integrate
